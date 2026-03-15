@@ -1,7 +1,5 @@
 import streamlit as st
 import os
-import requests
-from streamlit_lottie import st_lottie
 
 from src.script_generator import generate_podcast_script
 from src.audio_generator import create_podcast_audio
@@ -106,17 +104,6 @@ st.markdown("""
     
 </style>
 """, unsafe_allow_html=True)
-
-# --- HELPER FUNCTIONS ---
-@st.cache_data(show_spinner=False)
-def load_lottie_url(url: str):
-    try:
-        r = requests.get(url, timeout=5)
-        if r.status_code != 200:
-            return None
-        return r.json()
-    except:
-        return None
 
 # --- UI LAYOUT ---
 
