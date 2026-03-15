@@ -1,3 +1,4 @@
+import sys
 import asyncio
 import os
 import subprocess
@@ -10,8 +11,11 @@ GUEST_VOICE = "en-US-JennyNeural"
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "audio")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Find FFmpeg from Local AppData
-FFMPEG_EXE = os.path.join(os.environ.get("LOCALAPPDATA", ""), "Microsoft", "WinGet", "Packages", "Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe", "ffmpeg-8.0.1-full_build", "bin", "ffmpeg.exe")
+# Find FFmpeg based on OS
+if sys.platform == "win32":
+    FFMPEG_EXE = os.path.join(os.environ.get("LOCALAPPDATA", ""), "Microsoft", "WinGet", "Packages", "Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe", "ffmpeg-8.0.1-full_build", "bin", "ffmpeg.exe")
+else:
+    FFMPEG_EXE = "ffmpeg"
 
 async def generate_audio_for_line(text: str, voice: str, output_path: str):
     """Generates an MP3 file for a single line of text."""
