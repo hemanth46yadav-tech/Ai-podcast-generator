@@ -1,5 +1,6 @@
 import os
 import json
+import streamlit as st
 from google import genai
 from google.genai import types
 from pydantic import BaseModel, Field
@@ -8,7 +9,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Initialize Gemini Client
-api_key = os.getenv("GEMINI_API_KEY")
+# Try Streamlit secrets first (for cloud deployment), then fallback to local .env
+try:
+    api_key = st.secrets["GEMINI_API_KEY"]
+except (FileNotFoundError, KeyError):
+    api_key = os.getenv("GEMINI_API_KEY")
+
 if not api_key:
     raise ValueError("GEMINI_API_KEY environment variable not set.")
 
