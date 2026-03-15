@@ -62,7 +62,7 @@ def generate_podcast_script(topic: str) -> list[dict]:
         
     except Exception as e:
         print(f"Error generating script: {e}")
-        return []
+        raise
 
 if __name__ == "__main__":
     # Test the script generator
