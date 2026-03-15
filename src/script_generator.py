@@ -1,8 +1,7 @@
 import os
 import json
 import streamlit as st
-from google import genai
-from google.genai import types
+import google.generativeai as genai
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
@@ -18,7 +17,8 @@ except (FileNotFoundError, KeyError):
 if not api_key:
     raise ValueError("GEMINI_API_KEY environment variable not set.")
 
-client = genai.Client(api_key=api_key)
+genai.configure(api_key=api_key)
+client = genai.GenerativeModel('gemini-2.5-flash')
 
 SYSTEM_PROMPT = """
 You are an expert podcast scriptwriter. 
@@ -44,16 +44,13 @@ class PodcastScript(BaseModel):
 def generate_podcast_script(topic: str) -> list[dict]:
     """Generates a podcast script using Gemini."""
     
-    prompt = f'Please generate a podcast script about the following topic: "{topic}"'
+    prompt = f'{SYSTEM_PROMPT}\n\nPlease generate a podcast script about the following topic: "{topic}"\n\nReturn EXACTLY this JSON format: {{"lines": [{{"speaker": "Host", "text": "..."}}, {{"speaker": "Guest", "text": "..."}}]}}'
     
     try:
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=SYSTEM_PROMPT,
+        response = client.generate_content(
+            prompt,
+            generation_config=genai.types.GenerationConfig(
                 response_mime_type="application/json",
-                response_schema=PodcastScript,
             ),
         )
         
