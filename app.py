@@ -94,7 +94,9 @@ st.markdown("""
 # --- UI LAYOUT ---
 
 # Top Header
-st.image("assets/emojis/microphone.png", width=120)
+col_main1, col_main2, col_main3 = st.columns([1, 0.6, 1])
+with col_main2:
+    st.image("assets/emojis/microphone.png", use_container_width=True)
 st.markdown("<h1>Podcast AI Setup</h1>", unsafe_allow_html=True)
 st.markdown('<p class="subtitle">Generate professional 2-person podcasts from any text prompt.</p>', unsafe_allow_html=True)
 
@@ -153,12 +155,12 @@ if st.button("Generate Podcast", type="primary"):
         # Note: Streamlit serves files from the 'assets' folder differently when using HTML. 
         # For simplicity in st.subheader, we'll use a columns layout or just st.image + text.
         
-        # Alternatively, use st.columns for the header:
-        head_col1, head_col2 = st.columns([0.1, 0.9])
+        # Top-level alignment for transcript
+        head_col1, head_col2 = st.columns([0.08, 0.92])
         with head_col1:
-            st.image("assets/emojis/document.png", width=30)
+             st.image("assets/emojis/document.png", width=35)
         with head_col2:
-            st.subheader("Studio Transcript")
+             st.markdown("<h2 style='margin-top: -5px;'>Studio Transcript</h2>", unsafe_allow_html=True)
         
         transcript_container = st.container()
         
