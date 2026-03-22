@@ -149,7 +149,7 @@ if st.button("Generate Podcast", type="primary"):
             st.stop()
             
         # Display the script with custom CSS styling
-        st.markdown(f"### <img src='app/static/assets/emojis/document.png' width='30'> Studio Transcript", unsafe_allow_html=True)
+
         # Note: Streamlit serves files from the 'assets' folder differently when using HTML. 
         # For simplicity in st.subheader, we'll use a columns layout or just st.image + text.
         
