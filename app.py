@@ -7,7 +7,7 @@ from src.audio_generator import create_podcast_audio
 # --- PAGE CONFIG ---
 st.set_page_config(
     page_title="AI Podcast Generator", 
-    page_icon="🎧", 
+    page_icon="assets/emojis/headphones.png", 
     layout="centered",
     initial_sidebar_state="expanded"
 )
@@ -94,7 +94,7 @@ st.markdown("""
 # --- UI LAYOUT ---
 
 # Top Header
-st.markdown("<h1 style='text-align: center; font-size: 100px;'>🎙️</h1>", unsafe_allow_html=True)
+st.image("assets/emojis/microphone.png", width=120)
 st.markdown("<h1>Podcast AI Setup</h1>", unsafe_allow_html=True)
 st.markdown('<p class="subtitle">Generate professional 2-person podcasts from any text prompt.</p>', unsafe_allow_html=True)
 
@@ -110,10 +110,21 @@ VOICES = {
     "Steffan (Rational, News)": "en-US-SteffanNeural"
 }
 
-st.sidebar.markdown("### ⚙️ Studio Controls")
+st.sidebar.image("assets/emojis/settings.png", width=30)
+st.sidebar.markdown("### Studio Controls")
 st.sidebar.markdown("Customize your hosts:")
-host_voice_name = st.sidebar.selectbox("🎙️ Host Voice", list(VOICES.keys()), index=0)
-guest_voice_name = st.sidebar.selectbox("🎙️ Guest Voice", list(VOICES.keys()), index=1)
+
+col1, col2 = st.sidebar.columns([1, 9])
+with col1:
+    st.image("assets/emojis/microphone.png", width=25)
+with col2:
+    host_voice_name = st.selectbox("Host Voice", list(VOICES.keys()), index=0, label_visibility="collapsed")
+
+col3, col4 = st.sidebar.columns([1, 9])
+with col3:
+    st.image("assets/emojis/microphone.png", width=25)
+with col4:
+    guest_voice_name = st.selectbox("Guest Voice", list(VOICES.keys()), index=1, label_visibility="collapsed")
 
 host_voice_id = VOICES[host_voice_name]
 guest_voice_id = VOICES[guest_voice_name]
@@ -138,7 +149,16 @@ if st.button("Generate Podcast", type="primary"):
             st.stop()
             
         # Display the script with custom CSS styling
-        st.subheader("📄 Studio Transcript")
+        st.markdown(f"### <img src='app/static/assets/emojis/document.png' width='30'> Studio Transcript", unsafe_allow_html=True)
+        # Note: Streamlit serves files from the 'assets' folder differently when using HTML. 
+        # For simplicity in st.subheader, we'll use a columns layout or just st.image + text.
+        
+        # Alternatively, use st.columns for the header:
+        head_col1, head_col2 = st.columns([0.1, 0.9])
+        with head_col1:
+            st.image("assets/emojis/document.png", width=30)
+        with head_col2:
+            st.subheader("Studio Transcript")
         
         transcript_container = st.container()
         
@@ -153,7 +173,8 @@ if st.button("Generate Podcast", type="primary"):
                     st.markdown(f'<div class="guest-card"><strong>[ {speaker} ]</strong><br>{text}</div>', unsafe_allow_html=True)
                 
         # Step 2: Generate Audio
-        with st.spinner("🎧 Synthesizing audio and mastering tracks..."):
+        with st.spinner("Synthesizing audio and mastering tracks..."):
+            st.image("assets/emojis/headphones.png", width=40)
             audio_path = create_podcast_audio(script, host_voice=host_voice_id, guest_voice=guest_voice_id, output_filename="streamlit_output.mp3")
             
         if not audio_path or not os.path.exists(audio_path):
