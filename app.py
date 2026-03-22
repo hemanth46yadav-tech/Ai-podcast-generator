@@ -86,29 +86,15 @@ st.markdown("""
     }
     .guest-card:hover { transform: translateX(5px); }
     
-    /* 3D Rotating Microphone animation */
-    .rotating-mic {
-        font-size: 110px;
-        display: block;
-        text-align: center;
-        margin: 0 auto 10px auto;
-        animation: rotate3D 5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-        filter: drop-shadow(0px 15px 15px rgba(0,198,255,0.4));
-        transform-origin: center center;
-    }
-    @keyframes rotate3D {
-        0% { transform: perspective(800px) rotateY(0deg) rotateX(10deg) rotateZ(0deg); }
-        50% { transform: perspective(800px) rotateY(180deg) rotateX(25deg) rotateZ(5deg) scale(1.15); filter: drop-shadow(0px 35px 25px rgba(138,43,226,0.6)); }
-        100% { transform: perspective(800px) rotateY(360deg) rotateX(10deg) rotateZ(0deg); }
-    }
+
     
 </style>
 """, unsafe_allow_html=True)
 
 # --- UI LAYOUT ---
 
-# Top Header with Animation
-st.markdown('<div class="rotating-mic">🎙️</div>', unsafe_allow_html=True)
+# Top Header
+st.markdown("<h1 style='text-align: center; font-size: 100px;'>🎙️</h1>", unsafe_allow_html=True)
 st.markdown("<h1>Podcast AI Setup</h1>", unsafe_allow_html=True)
 st.markdown('<p class="subtitle">Generate professional 2-person podcasts from any text prompt.</p>', unsafe_allow_html=True)
 
