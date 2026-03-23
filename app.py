@@ -143,7 +143,7 @@ if st.button("Generate Podcast", type="primary"):
         st.error("Please enter a topic first.")
     else:
         # Step 1: Generate Script
-        with st.spinner("✍️ Neural network is writing the script..."):
+        with st.spinner("Crafting your unique podcast script..."):
             script = generate_podcast_script(topic)
             
         if not script:
