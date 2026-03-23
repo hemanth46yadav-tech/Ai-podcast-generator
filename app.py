@@ -190,4 +190,4 @@ if st.button("Generate Podcast", type="primary"):
         st.markdown("---")
         st.success("✅ Mastering complete! Listen below:")
         st.audio(audio_bytes, format="audio/mp3", loop=False, autoplay=False)
-        st.balloons()
+
